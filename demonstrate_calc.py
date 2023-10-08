@@ -4,8 +4,7 @@ from time import *
 from threading import *
 from math import *
 
-#please work github !
-#testing !!
+
 
 #create window
 mainWindow = Tk()
