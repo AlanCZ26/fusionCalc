@@ -1,30 +1,24 @@
-from tkinter import *
-from tkinter import ttk
-from time import *
-from threading import *
-from math import *
-#importing various things ^
+from tkinter import * #tkinter makes the windows work
+from tkinter import ttk #ttk makes the buttons work
+from math import * #math allows for more complex calculations
 
 #create window
 mainWindow = Tk()
-#secondWindow = Tk()
-
 #set the window size and name
-mainWindow.geometry("500x500+0+0")
+mainWindow.geometry("250x200+0+0")
 mainWindow.title("Main")
 
-#create a grid
+#create a grid for the buttons & labels to sit in
 frame = ttk.Frame(mainWindow,padding=10)
 frame.grid()
 
-#kill
+#define the kill button
 def kill():
     mainWindow.destroy()
 
 #prevent multiple auxillary windows from opening simultaneously
 def killOtherWindows():
-    print("first window opened")
-    #so it doesn't throw an error upon first run 
+    print("first window opened") #so it doesn't throw an error on the first run
 
 #pythagorean calculator
 def pythagWindow():
@@ -128,10 +122,9 @@ def angleConvWindow():
     entryAngleConverter.grid(column=2,row=1)
 
     def convRadToDeg():
-        #get the input values
-        inputNum = (entryAngleConverter.get())
-        if ((inputNum.replace(".","")).isdigit()): 
-            num = float(inputNum)
+        inputNum = (entryAngleConverter.get()) #get the input value
+        if ((inputNum.replace(".","")).isdigit()): #this detects the negative symbol "-", to catch any cases where the input is negative
+            num = float(inputNum) #converting the string (which is confirmed to be all numbers by the previous step) to a float
             #calculate the output
             output = degrees(num) * pi #assume it's by pi because who uses radians and doesn't have it in pi
             output = round(output,10) #round digits
@@ -145,8 +138,7 @@ def angleConvWindow():
     ttk.Button(frame3,text="To Degrees", command=convRadToDeg).grid(column=1,row=2)
 
     def convDegtoRad():
-        #get the input values
-        inputNum = (entryAngleConverter.get())
+        inputNum = (entryAngleConverter.get()) #get the input values
         if ((inputNum.replace(".","")).isdigit()): 
             num = float(inputNum)
             #calculate the output
@@ -162,12 +154,10 @@ def angleConvWindow():
             Label(frame3, text="output mod 2:").grid(column=2,row=4)
         else: print("Please input a positive number!")        
     ttk.Button(frame3,text="To Radians", command=convDegtoRad).grid(column=1,row=3)
-
-
 ttk.Button(frame, text="Deg-Rad Converter", command=angleConvWindow).grid(column=2,row=2)
 
-#buttons
+#quit button
 ttk.Button(frame, text="Quit", command=kill).grid(column=0,row=0)
 
-#main loop
+#main loop so the windows don't instantly die
 mainWindow.mainloop()
