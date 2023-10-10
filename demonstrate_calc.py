@@ -13,12 +13,10 @@ frame = ttk.Frame(mainWindow,padding=10)
 frame.grid()
 
 #define the kill button
-def kill():
-    mainWindow.destroy()
+def kill(): mainWindow.destroy()
 
 #prevent multiple auxillary windows from opening simultaneously
-def killOtherWindows():
-    print("first window opened") #so it doesn't throw an error on the first run
+def killOtherWindows(): print("first window opened") #so it doesn't throw an error on the first run
 
 #pythagorean calculator
 def pythagWindow():
@@ -155,6 +153,56 @@ def angleConvWindow():
         else: print("Please input a positive number!")        
     ttk.Button(frame3,text="To Radians", command=convDegtoRad).grid(column=1,row=3)
 ttk.Button(frame, text="Deg-Rad Converter", command=angleConvWindow).grid(column=2,row=2)
+
+#circle calculator
+def circleCalcWin():
+    #kill other windows
+    global killOtherWindows #so the function can be updated from other places
+    killOtherWindows()
+    #update killOtherWindows
+    def killOtherWindows():
+        fourthWindow.destroy()
+
+    #create 4th window
+    fourthWindow = Tk()
+
+    #update kill function
+    def kill():
+        mainWindow.destroy()
+        fourthWindow.destroy()
+    #update the quit button on the main window
+    ttk.Button(frame, text="Quit", command=kill).grid(column=0,row=0)
+
+    #modify the name, size and location
+    fourthWindow.geometry("300x200+700+300")
+    fourthWindow.title("Circle Calculator")
+    #create grid for new window
+    frame4 = ttk.Frame(fourthWindow,padding=10)
+    frame4.grid()
+    entryCircleCalc = Entry(frame4,width="8")
+    entryCircleCalc.grid(column=2,row=1)
+
+    #labels and inputs
+    ttk.Label(frame4,text="input radius").grid(column=1,row=1)
+
+    def circleCalc():
+        inputNum = (entryCircleCalc.get()) #get the input
+        if ((inputNum.replace(".","")).isdigit()): #this detects the negative symbol "-", to catch any cases where the input is negative
+            num = float(inputNum) #converting the string (which is confirmed to be all numbers by the previous step) to a float
+            #calculate the output
+            output = num * 2 * pi #circumference = 2*pi*r
+            output = round(output,10) #round digits
+            output2 = num * num * pi #area = pi * r^2
+            output2 = round(output2,10) #round digits  
+
+            #print output to window
+            Label(frame4, text=output,width="13",justify="left").grid(column=2,row=3)
+            Label(frame4, text="circumference:").grid(column=1,row=3)
+            Label(frame4, text=output2,width="13",justify="left").grid(column=2,row=4)
+            Label(frame4, text="area:").grid(column=1,row=4)
+        else: print("Please input a positive number!")  
+    ttk.Button(frame4,text="calculate",command=circleCalc).grid(column=1,row=2)
+ttk.Button(frame,text="Circle calculator",command=circleCalcWin).grid(column=2,row=3)
 
 #quit button
 ttk.Button(frame, text="Quit", command=kill).grid(column=0,row=0)
